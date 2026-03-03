@@ -91,7 +91,7 @@ This server is configured to:
 
 ---
 
-# Module Eight Journal Reflection (Required)
+# Module Eight Journal Reflection
 
 ## Architecture
 
