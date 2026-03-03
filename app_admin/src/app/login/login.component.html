@@ -1,0 +1,29 @@
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-white"><strong>Admin Login</strong></div>
+      <div class="card-body">
+        <p class="text-muted small">Use mock credentials for Module Seven testing.</p>
+        <div class="alert alert-danger py-2" *ngIf="error">{{ error }}</div>
+
+        <form (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input class="form-control" name="username" [(ngModel)]="username" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="password" required />
+          </div>
+          <button class="btn btn-primary w-100" [disabled]="loading" type="submit">
+            {{ loading ? 'Signing in...' : 'Sign In' }}
+          </button>
+        </form>
+
+        <div class="text-muted small mt-3">
+          Demo login: <code>admin</code> / <code>password123</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

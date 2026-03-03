@@ -1,0 +1,79 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h2 class="h4 mb-0">Trips</h2>
+    <div class="text-muted small">Admin SPA (Angular) — secure CRUD against /api/trips</div>
+  </div>
+  <button class="btn btn-outline-primary btn-sm" (click)="loadTrips()" [disabled]="loading">Refresh</button>
+</div>
+
+<div class="alert alert-danger" *ngIf="apiError">{{ apiError }}</div>
+<div class="alert alert-info" *ngIf="!authService.hasToken()">
+  You are not logged in. Trip list (GET) is visible, but Add / Edit / Delete is disabled until you sign in.
+</div>
+
+<div class="card mb-4" *ngIf="authService.hasToken(); else loginPrompt">
+  <div class="card-header bg-white"><strong>Add a New Trip</strong></div>
+  <div class="card-body">
+    <div class="alert alert-warning py-2" *ngIf="addError">{{ addError }}</div>
+    <form (ngSubmit)="addTrip()">
+      <div class="row g-3">
+        <div class="col-md-3"><label class="form-label">Trip Code</label><input class="form-control" name="tripCode" [(ngModel)]="newTrip.tripCode" required /></div>
+        <div class="col-md-5"><label class="form-label">Name</label><input class="form-control" name="name" [(ngModel)]="newTrip.name" required /></div>
+        <div class="col-md-4"><label class="form-label">Price</label><input class="form-control" name="price" [(ngModel)]="newTrip.price" placeholder="$" /></div>
+        <div class="col-md-4"><label class="form-label">Length</label><input class="form-control" name="length" [(ngModel)]="newTrip.length" placeholder="e.g., 4 days" /></div>
+        <div class="col-md-8"><label class="form-label">Image URL</label><input class="form-control" name="image" [(ngModel)]="newTrip.image" placeholder="https://..." /></div>
+        <div class="col-12"><label class="form-label">Description</label><textarea class="form-control" name="description" [(ngModel)]="newTrip.description" rows="2"></textarea></div>
+      </div>
+      <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-primary" type="submit">Add Trip (POST)</button>
+        <button class="btn btn-outline-secondary" type="button" (click)="resetNewTrip()">Clear</button>
+      </div>
+    </form>
+  </div>
+</div>
+<ng-template #loginPrompt>
+  <div class="card mb-4">
+    <div class="card-body">
+      <p class="mb-2">Login required to create, update, or delete trips.</p>
+      <a routerLink="/login" class="btn btn-primary btn-sm">Go to Login</a>
+    </div>
+  </div>
+</ng-template>
+
+<div class="d-flex align-items-center gap-2 mb-2">
+  <h3 class="h5 mb-0">Trip Cards</h3>
+  <span class="text-muted small" *ngIf="loading">Loading…</span>
+  <span class="text-muted small" *ngIf="!loading">({{ trips.length }} total)</span>
+</div>
+
+<div class="row g-3" *ngIf="trips.length">
+  <div class="col-md-6 col-lg-4" *ngFor="let trip of trips">
+    <app-trip-card [trip]="trip" [canEdit]="authService.hasToken()" (edit)="startEdit($event)" (del)="deleteTrip($event)"></app-trip-card>
+  </div>
+</div>
+
+<div class="alert alert-info" *ngIf="!loading && trips.length === 0">No trips found. Add one above to create your first record.</div>
+
+<div class="card mt-4" *ngIf="editModel && authService.hasToken()" id="editForm">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center">
+    <strong>Edit Trip (PUT)</strong>
+    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="cancelEdit()">Close</button>
+  </div>
+  <div class="card-body">
+    <div class="alert alert-warning py-2" *ngIf="editError">{{ editError }}</div>
+    <form (ngSubmit)="saveEdit()">
+      <div class="row g-3">
+        <div class="col-md-3"><label class="form-label">Trip Code</label><input class="form-control" [value]="editModel.tripCode" disabled /></div>
+        <div class="col-md-5"><label class="form-label">Name</label><input class="form-control" name="editName" [(ngModel)]="editModel.name" required /></div>
+        <div class="col-md-4"><label class="form-label">Price</label><input class="form-control" name="editPrice" [(ngModel)]="editModel.price" /></div>
+        <div class="col-md-4"><label class="form-label">Length</label><input class="form-control" name="editLength" [(ngModel)]="editModel.length" /></div>
+        <div class="col-md-8"><label class="form-label">Image URL</label><input class="form-control" name="editImage" [(ngModel)]="editModel.image" /></div>
+        <div class="col-12"><label class="form-label">Description</label><textarea class="form-control" name="editDescription" [(ngModel)]="editModel.description" rows="2"></textarea></div>
+      </div>
+      <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-success" type="submit">Save Changes (PUT)</button>
+        <button class="btn btn-outline-secondary" type="button" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container container-narrow">
+    <a class="navbar-brand" routerLink="/trips">Travlr Admin</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/trips" routerLinkActive="active">Trips</a>
+        </li>
+        <li class="nav-item" *ngIf="!authService.hasToken()">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+        <li class="nav-item ms-lg-2" *ngIf="authService.hasToken()">
+          <button class="btn btn-sm btn-outline-light" type="button" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container container-narrow py-4">
+  <router-outlet></router-outlet>
+</main>

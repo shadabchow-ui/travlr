@@ -1,0 +1,26 @@
+[
+  {
+    "tripCode": "gale-reef-getaway",
+    "name": "Gale Reef Getaway",
+    "description": "A relaxing reef experience featuring guided snorkeling, beach time, and an optional sunset cruise.",
+    "length": "3 days / 2 nights",
+    "price": "$599",
+    "image": "reef1.jpg"
+  },
+  {
+    "tripCode": "dawsons-reef-adventure",
+    "name": "Dawson’s Reef Adventure",
+    "description": "An action-packed trip visiting multiple reef sites with equipment rental included and optional kayaking.",
+    "length": "5 days / 4 nights",
+    "price": "$899",
+    "image": "reef2.jpg"
+  },
+  {
+    "tripCode": "claires-reef-escape",
+    "name": "Claire’s Reef Escape",
+    "description": "A laid-back resort getaway with morning reef tours, a seafood buffet evening, and optional spa services.",
+    "length": "7 days / 6 nights",
+    "price": "$1,199",
+    "image": "reef3.jpg"
+  }
+]
