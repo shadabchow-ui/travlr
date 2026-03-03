@@ -2,3 +2,6 @@ node_modules/
 .env
 .DS_Store
 __MACOSX/
+app_admin/.angular/
+app_admin/.angular/
+app_admin/.angular/
